@@ -24,6 +24,7 @@ require (
 	github.com/pion/sdp/v3 v3.0.18
 	github.com/pion/webrtc/v4 v4.2.11
 	github.com/prometheus/client_golang v1.23.2
+	github.com/prometheus/client_model v0.6.2
 	github.com/prometheus/procfs v0.20.1
 	github.com/puzpuzpuz/xsync/v4 v4.5.0
 	github.com/redis/go-redis/v9 v9.20.0
@@ -43,7 +44,7 @@ require (
 	golang.org/x/sys v0.45.0
 	golang.org/x/text v0.37.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa
-	google.golang.org/grpc v1.81.1
+	google.golang.org/grpc v1.82.1
 	google.golang.org/protobuf v1.36.11
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -82,7 +83,6 @@ require (
 	github.com/pion/transport/v4 v4.0.2 // indirect
 	github.com/pion/turn/v5 v5.0.8 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.68.1 // indirect
 	github.com/wlynxg/anet v0.0.5 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
