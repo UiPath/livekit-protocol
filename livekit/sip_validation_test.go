@@ -223,6 +223,13 @@ func TestValidateHeaderValue_ValidValues(t *testing.T) {
 			if err != nil {
 				t.Errorf("ValidateHeaderValue(%q) = %v, want nil", headerValue, err)
 			}
+
+			// Test the result-flavored method, too.
+			err = ValidateHeaderValueResult("Test-Header", headerValue).Error()
+			if err != nil {
+				t.Errorf("ValidateHeaderValueResult(%q).Error() = %v, want nil", headerValue, err)
+			}
+
 		})
 	}
 }
@@ -235,6 +242,12 @@ func TestValidateHeaderValue_InvalidValues(t *testing.T) {
 			err := ValidateHeaderValue("Test-Header", headerValue)
 			if err == nil {
 				t.Errorf("ValidateHeaderValue(%q) = nil, want error", headerValue)
+			}
+
+			// Test the result-flavored method, too.
+			err = ValidateHeaderValueResult("Test-Header", headerValue).Error()
+			if err == nil {
+				t.Errorf("ValidateHeaderValueResult(%q).Error() = nil, want error", headerValue)
 			}
 		})
 	}
@@ -264,9 +277,24 @@ func TestValidateNameAddr_InvalidHeaders(t *testing.T) {
 	}
 }
 
-func TestFrobiddenSipHeaderNames(t *testing.T) {
+// Ensure that we are collecting soft failures correctly.
+func TestValidateHeaderValueResult(t *testing.T) {
+	for i, nameAddr := range InvalidNameAddrHeaders {
+		t.Run(testCaseName(nameAddr, 32, i), func(t *testing.T) {
+			result := ValidateHeaderValueResult("from", nameAddr)
+			if err := result.Error(); err != nil {
+				t.Errorf("ValidateHeaderValueResult.Error()(%q) = %v, want nil", nameAddr, err)
+			}
+			if softErrs := result.SoftErrors(); len(softErrs) == 0 {
+				t.Errorf("ValidateHeaderValueResult.SoftErrors()(%q) is empty, want non-empty slice", nameAddr)
+			}
+		})
+	}
+}
+
+func TestForbiddenSipHeaderNames(t *testing.T) {
 	i := 0
-	for name := range FrobiddenSipHeaderNames {
+	for name := range ForbiddenSipHeaderNames {
 		i++
 		t.Run(testCaseName(name, 32, i), func(t *testing.T) {
 			err := ValidateHeaderName(name, true)
