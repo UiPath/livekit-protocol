@@ -3,4 +3,4 @@
 "@livekit/protocol": patch
 ---
 
-Add name field to the phone numbers.
+Report full CPU load in hwstats.GetCPULoad when idle is 0
